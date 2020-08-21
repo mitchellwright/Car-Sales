@@ -8,6 +8,7 @@ const AdditionalFeature = (props) => {
       {/* Add an onClick that will let you add a feature to your car */}
       <button
         className="button"
+        disabled={props.feature.disabled}
         onClick={() => props.addFeature(props.feature)}
       >
         Add

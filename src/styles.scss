@@ -48,4 +48,11 @@ body {
     border: 1px solid hotpink;
     color: #333;
   }
+  &:disabled {
+    background-color: hotpink;
+    border-color: transparent;
+    box-shadow: none;
+    opacity: 0.5;
+    color: #fff;
+  }
 }

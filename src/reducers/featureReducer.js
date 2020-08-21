@@ -8,17 +8,17 @@ const initialState = {
     features: [],
   },
   additionalFeatures: [
-    { id: 1, name: "V-6 engine", price: 1500 },
-    { id: 2, name: "Racing detail package", price: 1500 },
-    { id: 3, name: "Premium sound system", price: 500 },
-    { id: 4, name: "Rear spoiler", price: 250 },
+    { id: 1, name: "V-6 engine", price: 1500, disabled: false },
+    { id: 2, name: "Racing detail package", price: 1500, disabled: false },
+    { id: 3, name: "Premium sound system", price: 500, disabled: false },
+    { id: 4, name: "Rear spoiler", price: 250, disabled: false },
   ],
 };
 
 export const featureReducer = (state = initialState, action) => {
   switch (action.type) {
     case "ADD_FEATURE":
-      const additionalFeature = action.payload;
+      const additionalFeature = { ...action.payload, disabled: true };
       return {
         ...state,
         additionalPrice: state.additionalPrice + additionalFeature.price,
@@ -26,10 +26,17 @@ export const featureReducer = (state = initialState, action) => {
           ...state.car,
           features: [...state.car.features, additionalFeature],
         },
+        additionalFeatures: state.additionalFeatures.map((feature) => {
+          if (action.payload.id === feature.id) {
+            return { ...feature, disabled: true };
+          } else {
+            return feature;
+          }
+        }),
       };
 
     case "REMOVE_FEATURE":
-      const featureToRemove = action.payload;
+      const featureToRemove = { ...action.payload, disabled: false };
       const modifiedFeatures = state.car.features.filter(
         (feature) => feature.id !== featureToRemove.id
       );
@@ -37,6 +44,13 @@ export const featureReducer = (state = initialState, action) => {
         ...state,
         additionalPrice: state.additionalPrice - featureToRemove.price,
         car: { ...state.car, features: modifiedFeatures },
+        additionalFeatures: state.additionalFeatures.map((feature) => {
+          if (action.payload.id === feature.id) {
+            return { ...feature, disabled: false };
+          } else {
+            return feature;
+          }
+        }),
       };
 
     default:
