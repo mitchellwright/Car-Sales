@@ -3,17 +3,13 @@ import ReactDOM from "react-dom";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
 import App from "./App";
+import { featureReducer } from "./reducers/featureReducer";
 
 import "bulma/css/bulma.css";
 import "./styles.scss";
 
-function reducer() {
-  return {
-    title: "Hello world! I'm in the Redux store!",
-  };
-}
+const store = createStore(featureReducer);
 
-const store = createStore(reducer);
 const rootElement = document.getElementById("root");
 ReactDOM.render(
   <Provider store={store}>
