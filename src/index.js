@@ -8,7 +8,10 @@ import { featureReducer } from "./reducers/featureReducer";
 import "bulma/css/bulma.css";
 import "./styles.scss";
 
-const store = createStore(featureReducer);
+const store = createStore(
+  featureReducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
 const rootElement = document.getElementById("root");
 ReactDOM.render(
